@@ -1,1 +1,4 @@
 build
+/final_report/auto
+*.fdb_latexmk
+*.fls
