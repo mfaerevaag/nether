@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "common.h"
+#include "logger.h"
 #include "cpuid.h"
 
 
@@ -15,7 +16,7 @@ int feature_cpuid()
     /* get tsc bit */
     cpuid_get(CPUID_GETFEATURES, &regs);
     tsc_bit  = (regs.rdx & CPUID_FEAT_EDX_TSC);
-    printf("tsc bit = %d\n", tsc_bit);
+    log_infof("tsc bit = %d", tsc_bit);
 
     /* if tsc bit not set, we found ether */
     ret = tsc_bit == 0 ? 0 : 1;
@@ -31,18 +32,18 @@ int main(int argc, char *argv[])
 
     /* vendor */
     vendor = cpuid_get_vendorstring();
-    printf("vendor = %s\n", vendor);
+    log_infof("vendor = %s", vendor);
 
     /* check intel arch */
     if (strcmp(vendor, CPUID_VENDOR_INTEL) != 0) {
-        printf("not intel...\n");
+        log_warn("not intel...");
         exit(0);
     }
 
     /* cpuid */
     ret = feature_cpuid();
     if (ret == 0) {
-        printf("ether detected!\n");
+        log_info("ether detected!");
     }
 
     /* clean up */
