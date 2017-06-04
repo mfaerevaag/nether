@@ -1,0 +1,66 @@
+\documentclass{sig-alternate-05-2015}
+\newcommand{\showComments}{yes} %% yes or no
+\usepackage{xcolor}
+\usepackage[hyphenbreaks]{breakurl}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{setspace}
+\setstretch{1.2}
+\usepackage[
+    breaklinks,
+    colorlinks,
+    pdfpagelabels=false,
+    linkcolor=blue!50!black,
+    citecolor=blue!50!black,
+    filecolor=blue!50!black,
+    urlcolor=blue!50!black
+  ]{hyperref}
+\usepackage{shortcuts}
+
+\def\sharedaffiliation{%
+\end{tabular}
+\begin{tabular}{c}}
+
+\begin{document}
+\setcopyright{acmcopyright}
+% \doi{10.475/123_4}
+% \isbn{123-4567-24-567/08/06}
+% \conferenceinfo{ACSAC '16}{December 5--9, 2016, Hilton Los Angeles/Universal City, Los Angeles, CA, USA}
+% \acmPrice{\$15.00}
+
+\title{IS632: Final Project Report}
+%\subtitle{IS632: Project Proposal}
+\numberofauthors{3}
+\author{
+  \alignauthor Markus Faerevaag
+%  
+  \alignauthor Jungsuk Oh
+%  
+  \alignauthor Ji Hyeon Yoon
+%  
+  \sharedaffiliation
+  \affaddr{School of Computing}\\
+  \affaddr{KAIST}\\
+  \affaddr{Daejeon, Korea}\\
+  \email{\{mfaerevaag,jsoh921,jihyeon.yoon\}@kaist.ac.kr}
+}
+\maketitle
+
+\vspace{8pt}
+\begin{abstract}
+\vspace{8pt}
+abstract will be here
+\end{abstract}
+
+
+
+\vspace{10pt}
+\bibliographystyle{unsrt}
+{
+\raggedright
+\bibliography{publications}
+}
+
+\end{document}
