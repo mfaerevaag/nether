@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "common.h"
@@ -7,18 +8,14 @@
 
 int main(int argc, char *argv[])
 {
-    char vendor[13];
-    regs_t regs;
+    char *vendor;
 
-    cpuid_get(CPUID_GETVENDORSTRING, &regs);
-
-    memcpy(vendor, &regs.rbx, 4);
-    memcpy(&(vendor[4]), &regs.rdx, 4);
-    memcpy(&(vendor[8]), &regs.rcx, 4);
-
-    vendor[12] = '\0';
+    vendor = cpuid_get_vendorstring();
 
     printf("vendor = %s\n", vendor);
+
+    /* clean up */
+    free(vendor);
 
     return 0;
 }

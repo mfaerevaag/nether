@@ -10,6 +10,10 @@ typedef unsigned __int64  uint64_t;
 #include <stdint.h>
 #endif
 
+#include <string.h>
+
+#include "common.h"
+
 #define CPUID_VENDOR_OLDAMD       "AMDisbetter!"
 #define CPUID_VENDOR_AMD          "AuthenticAMD"
 #define CPUID_VENDOR_INTEL        "GenuineIntel"
@@ -107,5 +111,7 @@ static inline void cpuid_get(uint64_t code, regs_t *regs)
                   : "a" (code), "c" (0));
 #endif
 }
+
+char *cpuid_get_vendorstring();
 
 #endif /* CPUID_H */
