@@ -7,3 +7,66 @@
 % \newcommand*{\numflashes}{\skc{1,200}\xspace} %%% FIXME
 % \newcommand*{\classificationhours}{\skc{90}\xspace} %%% FIXME
 % \newcommand*{\openwebpage}{\url{http://csrc.kaist.ac.kr/}\xspace} %%% FIXME
+
+% colors
+% \usepackage[table]{xcolor}
+\definecolor{lst_grey}{gray}{0.95}
+\definecolor{lst_blue}{RGB}{0, 115, 209}
+\definecolor{lst_green}{RGB}{14, 185, 99}
+\definecolor{lst_red}{RGB}{255, 82, 82,}
+
+% listings
+\usepackage{listings}
+\usepackage{inconsolata}
+\lstset{
+  basicstyle      = \small\ttfamily,
+  stringstyle     = \color{lst_red},
+  keywordstyle    = \color{lst_blue}\bfseries,
+  commentstyle    = \color{lst_green},
+  backgroundcolor = \color{lst_grey},
+  frame=single,
+  rulecolor=\color{lightgray},
+  framesep=3pt,
+  numbersep=5pt,
+  xleftmargin=10pt,
+  xrightmargin=0pt,
+  showspaces=false,
+  showstringspaces=false,
+  tabsize=4,
+  aboveskip=15pt,
+  belowskip=5pt,
+  lineskip=2pt,
+  captionpos=b,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=100pt,
+  breaklines,
+  numbersep=5pt,
+  breakatwhitespace=false,
+  showspaces=false,
+  showtabs=false,
+  escapeinside={(*@}{@*)}
+}
+
+\lstdefinelanguage
+   [x86_64]{Assembler}     % add a "x64" dialect of Assembler
+   [x86masm]{Assembler}    % based on the "x86masm" dialect
+   % with these extra keywords:
+   {morekeywords={movl, addl, incl, cmpl, jl, %
+                  rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
+                  r8,r8d,r8w,r8b,r9,r9d,r9w,r9b, %
+                  r10,r10d,r10w,r10b,r11,r11d,r11w,r11b, %
+                  r12,r12d,r12w,r12b,r13,r13d,r13w,r13b, %
+                  r14,r14d,r14w,r14b,r15,r15d,r15w,r15b}} % etc.
+
+\lstnewenvironment{lstc}[1][]
+  {\lstset{%
+    language={[ANSI]C},%
+    morekeywords={__asm__,__volatile__},%
+    #1}}
+  {}
+
+\lstnewenvironment{lstasm}[1][]
+  {\lstset{language={[x86_64]{Assembler}},#1}}
+  {}
