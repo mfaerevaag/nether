@@ -1,0 +1,60 @@
+\section{Approach}
+\label{sec:approach}
+
+todo
+
+
+\subsection{CPUID Instruction}
+\mvf{Draft:}
+
+P{\'e}k {\em et. al}~\cite{nether}
+
+Ether alters the output of {\tt CPUID}, flipping the bit for TSC support. Should
+be 1 in both VMM and bare metal environment. Can easily be checked, as
+Figure~\ref{fig:cpuid-tsc}
+
+If it is a bug in the Ether implementation, best solution is to fix.
+
+Alternatively, if not possible to fix, spoof the value in the same manner as
+{\tt PUSHF} and {\tt POPF}. Ether deliberately changes the flag register when
+running, as it sets the debug flag to be able to step through the target program
+and get a program trace. It hides this from the target by spoofing the values of
+instructions used to read and write these flags, as {\tt PUSHF} and {\tt POPF}.
+The exact same technique could be used to spoof the TSC-bit when program
+executes CPUID.
+
+\begin{figure}[h]
+\begin{lstc}
+#define CPUID_GETFEATURES 0x00000001
+#define CPUID_FEAT_EDX_TSC (1 << 4)
+...
+__asm__ volatile ("cpuid" :
+    "=a" (regs->rax),
+    "=b" (regs->rbx),
+    "=c" (regs->rcx),
+    "=d" (regs->rdx)
+    : "a" (CPUID_GETFEATURES), "c" (0));
+
+tsc  = (regs->rdx & CPUID_FEAT_EDX_TSC);
+
+if (!tsc) printf("detected ether!\n");
+\end{lstc}
+\caption{\label{fig:cpuid-tsc} Code snippet in C showing how to check for TSC
+  support through the CPUID instruction.}
+\end{figure}
+
+
+\subsection{CPU Errata}
+
+todo
+
+
+\subsection{Timing Information}
+
+todo
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:
