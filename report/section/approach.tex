@@ -59,6 +59,7 @@ To thwart this attack completely, we should patch those buggy instructions or us
 	\label{fig:errata}
 \end{figure}
 
+In general, those bugs do not happen always. Table~\ref{fig:errata} demonstrates the number of LER MSR updates when the CPU erratum was executed 100, 1000, 10000 and 100000 times under the corresponding environments. The update occurs only in the native environment, but the frequency of occurrence is unpredictable and irregular(from 20\% up to 65\%). Therefore, this CPU erratum should be executed in several times in order to detect hardware-assisted virtualization environment and this can be considered as a malicious behavior. So, to mitigate this attack, we set the threshold first and then count the number of all execution about those buggy instructions during the runtime of each program. If the counted number exceed the threshold, we can classify that program as a malware or just block to execute buggy instructions anymore. This method cannot prevent from CPU errata attack but can mitigate it, and there is a trade-off between TP and FP depending on how the threshold is set. 
 
 \subsection{Timing Information}
 \label{sec:approach-timing}
