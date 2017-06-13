@@ -27,7 +27,7 @@ spoof the TSC-bit when program executes CPUID.
 This technique of spoofing the CPUID output suffers from timing attacks, which
 will be elaborated in~\nameref{sec:approach-timing}.
 
-\begin{figure*}
+\begin{figure}
 \begin{lstc}
 void vmx_set_pending_exceptions(struct vcpu *v)
 {
@@ -36,10 +36,8 @@ void vmx_set_pending_exceptions(struct vcpu *v)
 +    {
 +         /* detected PUSHF */
 +
-+         v->domain->arch.hvm_domain.ether_controls.
-+                 send_guest_exception = 1;
-+         v->domain->arch.hvm_domain.ether_controls.
-+                 next_expected_rip = guest_rip + 1;
++         v->domain->arch.hvm_domain.ether_controls.send_guest_exception = 1;
++         v->domain->arch.hvm_domain.ether_controls.next_expected_rip = guest_rip + 1;
 +    }
 +    else if (instruction[0] == 0x9D)
 +    {
@@ -50,7 +48,7 @@ void vmx_set_pending_exceptions(struct vcpu *v)
 }
 \end{lstc}
 \caption{\label{fig:pushf} Part of the patch Ether does on the }
-\end{figure*}
+\end{figure}
 
 \subsection{CPU Errata}
 \label{sec:approach-errata}
