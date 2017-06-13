@@ -5,6 +5,8 @@ todo
 
 
 \subsection{CPUID Instruction}
+\label{sec:approach-cpuid}
+
 \mvf{Draft:}
 
 P{\'e}k {\em et. al}~\cite{nether}
@@ -43,13 +45,18 @@ if (!tsc) printf("detected ether!\n");
   support through the CPUID instruction.}
 \end{figure}
 
+This technique of spoofing the CPUID output suffers from timing attacks, which
+will be elaborated in~\nameref{sec:approach-timing}.
+
 
 \subsection{CPU Errata}
+\label{sec:approach-errata}
 
 todo
 
 
 \subsection{Timing Information}
+\label{sec:approach-timing}
 
 todo
 
