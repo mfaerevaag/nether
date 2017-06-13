@@ -9,42 +9,48 @@ TODO intro
 P{\'e}k {\em et al.}~\cite{nether}
 
 Ether alters the output of {\tt CPUID}, flipping the bit for TSC support. Should
-be 1 in both VMM and bare metal environment. Can easily be checked, as
-Figure~\ref{fig:cpuid-tsc}
+be 1 in both VMM and bare metal environment. Can easily be checked, as shown in
+Figure~\ref{fig:cpuid-tsc}, in the Appendix.
 
-If it is a bug in the Ether implementation, best solution is to fix.
+If it is a bug in the Ether implementation, best solution is to fix, though we
+do not have good enough knowledge of the source code to know.
 
-Alternatively, if not possible to fix, spoof the value in the same manner as
-{\tt PUSHF} and {\tt POPF}. Ether deliberately changes the flag register when
-running, as it sets the debug flag to be able to step through the target program
-and get a program trace. It hides this from the target by spoofing the values of
-instructions used to read and write these flags, as {\tt PUSHF} and {\tt POPF}.
-The exact same technique could be used to spoof the TSC-bit when program
-executes CPUID.
-
-\begin{figure}[h]
-\begin{lstc}
-#define CPUID_GETFEATURES 0x00000001
-#define CPUID_FEAT_EDX_TSC (1 << 4)
-...
-__asm__ volatile ("cpuid" :
-    "=a" (regs->rax),
-    "=b" (regs->rbx),
-    "=c" (regs->rcx),
-    "=d" (regs->rdx)
-    : "a" (CPUID_GETFEATURES), "c" (0));
-
-tsc  = (regs->rdx & CPUID_FEAT_EDX_TSC);
-
-if (!tsc) printf("detected ether!\n");
-\end{lstc}
-\caption{\label{fig:cpuid-tsc} Code snippet in C showing how to check for TSC
-  support through the CPUID instruction.}
-\end{figure}
+Alternatively, spoof the value in the same manner as {\tt PUSHF} and {\tt POPF}.
+Ether deliberately changes the flag register when running, as it sets the debug
+flag to be able to step through the target program and get a program trace. It
+hides this from the target by spoofing the values of instructions used to read
+and write these flags, as {\tt PUSHF} and {\tt POPF}. Figure~\ref{fig:pushf}
+shows how the Xen hypervisor is patched to check for specific instructions and
+alter the effect of that instruction. The exact same technique could be used to
+spoof the TSC-bit when program executes CPUID.
 
 This technique of spoofing the CPUID output suffers from timing attacks, which
 will be elaborated in~\nameref{sec:approach-timing}.
 
+\begin{figure*}
+\begin{lstc}
+void vmx_set_pending_exceptions(struct vcpu *v)
+{
+    ...
++    if(instruction[0] == 0x9C)
++    {
++         /* detected PUSHF */
++
++         v->domain->arch.hvm_domain.ether_controls.
++                 send_guest_exception = 1;
++         v->domain->arch.hvm_domain.ether_controls.
++                 next_expected_rip = guest_rip + 1;
++    }
++    else if (instruction[0] == 0x9D)
++    {
++         /* detected POPF */
++         ...
++    }
+    ...
+}
+\end{lstc}
+\caption{\label{fig:pushf} Part of the patch Ether does on the }
+\end{figure*}
 
 \subsection{CPU Errata}
 \label{sec:approach-errata}
@@ -69,5 +75,5 @@ todo
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "paper"
+%%% TeX-master: "../paper"
 %%% End:
