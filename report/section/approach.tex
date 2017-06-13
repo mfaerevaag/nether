@@ -48,8 +48,16 @@ will be elaborated in~\nameref{sec:approach-timing}.
 
 \subsection{CPU Errata}
 \label{sec:approach-errata}
-CPU errata refer to the collection of design defects or errors that may induce the CPU to behave differently from the published specification. Such CPU errata is strongly bound to CPU models and nEther exploits bugs in the Core 2 Duo family, called AH4 Erratum. The AH4 Erratum states that "VERW/VERR/LSL/LAR" instructions may unexpectedly update the Last Exception Record(LER) MSR" and there is no planned fix for it. Concretely, VERW and VERR instructions verify whether the code or data segment specified with the source operand is readable (VERR) or writable (VERW) from the current privilege level. The LAR instruction loads access rights from a segment descriptor into a general purpose register, and the LSL instruction loads the unscrambled segment limit from the segment descriptor into a general-purpose register. This erratum is a design fault so its existence is unintended. Therefore, hardware-assisted-virtualization solutions (e.g., Xen) will not implement this erratum in the virtual CPUs of guests, because there is no need to mimic even unexpected system bugs. As a result, malware can detect hardware-assisted virtualization environment by executing those buggy instructions and checking whether LER MSR is unexpectedly updated or not.
+CPU errata refer to the collection of design defects or errors that may induce the CPU to behave differently from the published specification. Such CPU errata is strongly bound to CPU models and nEther exploits bugs in the Core 2 Duo family, called AH4 Erratum. The AH4 Erratum states that "VERW/VERR/LSL/LAR" instructions may unexpectedly update the Last Exception Record(LER) MSR" and there is no planned fix for it. Concretely, VERW and VERR instructions verify whether the code or data segment specified with the source operand is readable (VERR) or writable (VERW) from the current privilege level. The LAR instruction loads access rights from a segment descriptor into a general purpose register, and the LSL instruction loads the unscrambled segment limit from the segment descriptor into a general-purpose register. This erratum is a design fault so its existence is unintended. Therefore, hardware-assisted-virtualization solutions (e.g., Xen) will not implement this erratum in the virtual CPUs of guests, because there is no need to mimic even unexpected system bugs. As a result, malware can detect hardware-assisted virtualization environment by executing those buggy instructions and checking whether LER MSR is unexpectedly updated or not. In other words, this attack cannot recognize the presence of Ether, but can reveal the hardware-virtualized runtime environment. \\
 
+To thwart this attack completely, we should patch those buggy instructions or use another CPU, but It seems like infeasible and make no sense. So, we propose a practical method to mitigate this attack.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\linewidth]{figure/errata_table.png}
+	\caption{The number of LER MSR updates according to the erratum execution}
+	\label{fig:errata}
+\end{figure}
 
 
 \subsection{Timing Information}
