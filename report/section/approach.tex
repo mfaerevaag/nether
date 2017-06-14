@@ -75,20 +75,18 @@ __asm__ {
 	/* wrmsr == MSR[ECX] = EDX:EAX; */
 	...
 	verr ax
-	xor edx, edx // make high-order 32 bits zero
-	and eax, 0x78 // store arbitrary value in low-order 32bits
-	mov ecx, 0x1dd
-	wrmsr 
-	mov ecx, 0x1de
-	wrmsr
++	/* store arbitary value in eax, edx */
++	mov ecx, 0x1dd
++	wrmsr 
++	mov ecx, 0x1de
++	wrmsr
 	...
 	verw cx
-	xor edx, edx // make high-order 32 bits zero
-	and eax, 0x99 // store arbitrary value in low-order 32bits
-	mov ecx, 0x1dd
-	wrmsr
-	mov ecx, 0x1de
-	wrmsr
++	/* store arbitary value in eax, edx */
++	mov ecx, 0x1dd
++	wrmsr
++	mov ecx, 0x1de
++	wrmsr
 	...
 }
 
