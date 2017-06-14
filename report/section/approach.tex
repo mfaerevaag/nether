@@ -98,9 +98,20 @@ __asm__ {
 
 \subsection{Timing Information}
 \label{sec:approach-timing}
-Taking advantage to the performance and timing information is more sophisticated method for malwares to detect its environment. Although virtual machine\textquotesingle s performance is always slower than it would have been on real hardware, blindly measuring the absolute performance scores is not enough to determine whether its environment. Generally, two approaches to use timing information.
+Taking advantage of the performance measures and timing information is more sophisticated method for malwares to detect its environment. Although virtual machine\textquotesingle s performance will always slower than it would have been on real hardware, blindly measuring the absolute performance scores is not sufficient to detect virtual environments.\cite{raffetseder2007} Generally, two approaches to use timing information.
 
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/comp_inst.jpg}
+	\caption{Reading/Writing on CR0 (left) and CR3 (right)}
+	\label{fig:comparison_of_instructions}
+\end{figure*}
 
+\subsubsection{Comparison of Instructions}
+Even though a single performance score does not provide any meaningful clues, comparing the time taken between privileged instructions and unprivileged instructions can be useful to the VM detection mechanism. Raffetseder{\em et al.}~\cite{raffetseder2007} has used unprivileged instruction \textquotesingle s performance as a baseline and compare it privileged instruction \textquotesingle s to obtain relative performance number.
+\begin{equation*}
+Relative Performance = \frac{T_{privileged}}{T_{unprivileged}}
+\end{equation*}
 
 %%% Local Variables:
 %%% mode: latex
