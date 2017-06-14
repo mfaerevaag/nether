@@ -114,6 +114,29 @@ Relative Performance = \frac{T_{privileged}}{T_{unprivileged}}
 \end{equation*}
 The insight is that real processors has to perform different tasks than simulated processors when handling privileged instructions. Thus it causes different relative performance results.  Raffetseder{\em et al.}~\cite{raffetseder2007} has conducted an experiment to prove the concept. A kernel module reads from a control register (CR0\footnote{contains various control flags} or CR3\footnote{When virtual addressing is enabled, CR3 register helps on virtual address to physical address translation}), then writes it back to where it came from. Raffetseder used processor\textquotesingle s time stamp counter (TSC) to measure the time elapsed to execute instructions. Figure~\ref{fig:comparison_of_instructions} shows the results. Real hardware showed poor relative performances when accessing CR0 but showed greater performance on CR3. Although Raffetseder did not explicitly explained why the results are different, it experiments showed a detectable difference between emulated and real environments.
 
+\subsubsection{Cached Instructions}
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/realhw.jpg}
+	\caption{Real hardware Cache On (left), Cache Off (right)}
+	\label{fig:cache_realhw}
+\end{figure*}
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/qemu.jpg}
+	\caption{Qemu On (left), Cache Off (right)}
+	\label{fig:cache_qemu}
+\end{figure*}
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/vmware.jpg}
+	\caption{VMware Cache On (left), Cache Off (right)}
+	\label{fig:cache_vmware}
+\end{figure*}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../paper"
