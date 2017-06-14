@@ -82,7 +82,9 @@ Taking advantage of the performance measures and timing information is more soph
 
 \subsubsection{Comparison of Instructions}
 Even though a single performance score does not provide any meaningful clues, comparing the time taken between privileged instructions and unprivileged instructions can be useful to the VM detection mechanism. Raffetseder{\em et al.}~\cite{raffetseder2007} has used unprivileged instruction \textquotesingle s performance as a baseline and compare it privileged instruction \textquotesingle s to obtain relative performance number.
-
+\begin{equation*}
+Relative Performance = \frac{T_{privileged}}{T_{unprivileged}}
+\end{equation*}
 
 %%% Local Variables:
 %%% mode: latex
