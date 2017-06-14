@@ -72,7 +72,7 @@ Another proposed mitigation is to mimic the CPU erratum intentionally. Our goal 
 \begin{figure}[h]
 \begin{lstc}
 __asm__ {
-	/* wrmsr == MSR[ECX] = EDX:EAX; */
+	/* wrmsr : MSR[ECX] = EDX:EAX; */
 	...
 	verr ax
 +	/* store arbitary value in eax, edx */
