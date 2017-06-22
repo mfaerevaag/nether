@@ -22,6 +22,8 @@ Ether's system architecture is represented in Figure~\ref{fig:ether} below.
 \subsection{nEther}
 P{\'e}k \textit{et al.} introduced novel approaches that make the detection of hardware assisted virtualization platforms and out-of-the-guest malware analysis frameworks possible~\cite{nether}. In order to demonstrate their concepts, they implemented a scalable and flexible application framework over Window XP called \textit{nEther} which can practically disclose the presence of both \textit{Ether}~\cite{ether}, and Intel VT by executing multiple feature tests. Their proposed feature tests consist of three parts as follows: 1) timing information, 2) CPUID information, and 3) CPU Errata. 
 
+The use of timing information is a well-known techinique to detect the presence of traditional debuggers. The simplest way to get timing information is the use of internal timers and periodic interrupt sources such as the Time-Stamp Counter(TSC), Periodic Interrupt Timper (PIT), and so on. In case of out-of-the-guest malware analyser, it falsify internal timers in order to fool a timing test and provide transparency.
+
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\linewidth]{figure/nether.png}
