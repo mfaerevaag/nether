@@ -1,10 +1,7 @@
-Malwares are often analyzed in virtual machines (a.k.a. sandboxes) for effectiveness. However, sophisticated malwares are able to detect whether it is being executed on virtual machines or real hardware. If it decides that it is not on bare metal, then it would not launch any malicious activities to hinder its analysis.
+Malwares are often analyzed in virtual machines (a.k.a. sandboxes) for effectiveness. However, sophisticated malwares are able to detect whether it is being executed on virtual machines or real hardware. If it decides that it is not on bare metal, then it would not launch any malicious activities to hinder its analysis. In CCS\textquotesingle 08, Ether \cite{ether} has been introduced and has provided a way for the defense community to make the sandbox transparent to the malware. Three years lalter, P{\'e}k \textit{et al.}\cite{nether} published that Ether\cite{ether} was still detectable for malwares by using timing information, CPUID, and CPU errata. Although the fight between malware authors and security researchers on detecting and hiding virtual environment is an ongoing battle, it was shown that achieving transparency is much more difficult.
+There are two types of virtualization in general. The first is software based where the guest OS runs on top of a host OS like the VMware or VirtualBox. The second is the hardware based virtualization that runs without any host OS but on top of hypervisor like Intel VT-x. The software based solution is far from perfect. It has so many bugs that it is almost impossible for the VM to be perfectly transparent. Although the hardware solution is better in terms of bugs, clever techniques such as testing the CPU cache remains to be a challenge for the security community.
+In this paper\textquotesingle s contributions are:
 
-mention malware detect VMM to avoid analysis
-
-any contributions?
-
-The rest of this paper is organized as follows. TODO
 
 %%% Local Variables:
 %%% mode: latex
