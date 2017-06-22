@@ -1,12 +1,8 @@
-TODO intro
+nEther\cite{nether} points out three attack vectors on Ether\cite{ether}: CPUID, CPU errata, and timing information. In this section, we will discuss each attacks and propose our suggested mitigation methods.
 
 
 \subsection{CPUID Instruction}
 \label{sec:approach-cpuid}
-
-\mvf{Draft:}
-
-P{\'e}k {\em et al.}~\cite{nether}
 
 Ether alters the output of {\tt CPUID}, flipping the bit for TSC support. Should
 be 1 in both VMM and bare metal environment. Can easily be checked, as shown in
