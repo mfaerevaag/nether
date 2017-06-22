@@ -2,6 +2,11 @@ Malwares are often analyzed in virtual machines (a.k.a. sandboxes) for effective
 There are two types of virtualization in general. The first is software based where the guest OS runs on top of a host OS like the VMware or VirtualBox. The second is the hardware based virtualization that runs without any host OS but on top of hypervisor like Intel VT-x. The software based solution is far from perfect. It has so many bugs that it is almost impossible for the VM to be perfectly transparent. Although the hardware solution is better in terms of bugs, clever techniques such as testing the CPU cache remains to be a challenge for the security community.
 In this paper\textquotesingle s contributions are:
 
+\begin{itemize}
+\item We have surveyed common VM detection techniques used by malware authors
+\item We have proposed two novel mitigation method on VM detection through CPU errata
+\item We have emphasized analysis of sophisticated VMs should never be done on software based VM due to their numerous defects 
+\end{itemize}
 
 %%% Local Variables:
 %%% mode: latex
