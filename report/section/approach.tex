@@ -69,6 +69,7 @@ In general, those bugs do not happen always. Table~\ref{fig:errata} demonstrates
 \subsubsection{Proposed Mitigation 2}
 Another proposed mitigation is to mimic the CPU erratum intentionally. Our goal is to make it difficult to distinguish hardware-virtualized-environment from native one, and the attack exploits that LER MSR update happens only in native environment. Therefore, we may mitigate this attack by updating LER MSR intentionally whenever buggy instructions(\texttt{VERW/VERR/LSL/LAR}) are executed. This method can be implemented in two ways. The first one is to update LER MSR directly right after buggy instructions are executed while monitoring every kernel mode instructions. Note that we do not need to monitor user mode instructions, since attack code should be executed in kernel mode in order to read LER MSR and check whether it is updated or not. The second one is to add LER MSR update code right after every buggy instructions using binary rewriting. LER MSR is divided into {\tt MSR\_LER\_FROM\_LIP} and {\tt MSR\_LER\_TO\_LIP}, and those are located in {\tt 0x1dd} and {\tt 0x1de}, respectively. Therefore, we can add code to modify the value of {\tt0x1dd} and {\tt 0x1de} immediately after \texttt{VERW/VERR/LSL/LAR} instructions, as shown in the Figure~\ref{fig:wrmsr}. Such binary rewriting may be conducted only when kernel module is loaded in the memory in order to minimize performance overhead. This mitigation cannot be applied to self-modifying code, but it is out of scope in our paper.
 
+
 \begin{figure}[h]
 \begin{lstc}
 __asm__ {
@@ -121,6 +122,28 @@ However, it was shown that disabling caching is not properly supported on Qemu a
 Therefore, malware authors can take advantage of the fact the caching cannot be turned off on virtual environments. If a malware obtain measurements similar to Figure~\ref{fig:cache_qemu} or Figure~\ref{fig:cache_vmware}, it should consider itself being in a sandbox and hide its malicious executions.
 
 \subsubsection{Mitigation of Cached Instructions}
+
+\begin{figure}[h]
+\begin{lstc}
+; calc mean time before
+loop:
+	retsc
+	;; test
+	rdtsc
+
+; flush tlb
+cpuid
+
+; check time after
+rdtsc
+;;test
+rdtsc
+
+; very different? 
+cmp $before $after
+\end{lstc}
+\caption{\label{fig:cache_mitigation} Code snippset. }
+\end{figure}
 
 
 \begin{figure*}[!t]
