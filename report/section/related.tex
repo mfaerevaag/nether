@@ -20,13 +20,42 @@ Ether's system architecture is represented in Figure~\ref{fig:ether} below.
 \end{figure}
 
 \subsection{nEther}
-P{\'e}k \textit{et al.} introduced novel approaches that make the detection of hardware assisted virtualization platforms and out-of-the-guest malware analysis frameworks possible~\cite{nether}. In order to demonstrate their concepts, they implemented a scalable and flexible application framework over Window XP called \textit{nEther} which can practically disclose the presence of both \textit{Ether}~\cite{ether}, and Intel VT by executing multiple feature tests. The system overview of nEther is depicted in Figure~\ref{fig:nether} and their proposed feature tests consist of three parts as follows: 1) timing information, 2) CPUID information, and 3) CPU Errata. 
+P{\'e}k \textit{et al.} introduced novel approaches that make the detection of 
+hardware assisted virtualization platforms and out-of-the-guest 
+malware analysis frameworks possible~\cite{nether}. In order to demonstrate their concepts, 
+they implemented a scalable and flexible application framework over Window XP 
+called \textit{nEther} which can practically disclose the presence of both 
+\textit{Ether}~\cite{ether}, and Intel VT by executing multiple feature tests. 
+The system overview of nEther is depicted in Figure~\ref{fig:nether} and 
+their proposed feature tests consist of three parts as follows: 1) timing information, 
+2) CPUID information, and 3) CPU Errata. 
 
-The use of timing information is a well-known techinique to detect the presence of traditional debuggers. The simplest way to get timing information is the use of internal timers and periodic interrupt sources such as the Time-Stamp Counter(TSC), Periodic Interrupt Timper (PIT), and so on. In case of out-of-the-guest malware analyser, it falsify internal timers in order to fool a timing test and provide transparency. However, the correct manipulation of timing cannot be guaranteed in all the circumstances. As a result, nEther can detect the existence of Ether, based on a contradiction raised by clock cycle manipulation where the analyzer returns an adjusted cycle difference to hide its presence.
+The use of timing information is a well-known techinique to detect the presence 
+of traditional debuggers. The simplest way to get timing information is 
+the use of internal timers and periodic interrupt sources such as the Time-Stamp Counter(TSC), 
+Periodic Interrupt Timper (PIT), and so on. In case of out-of-the-guest malware analyser, 
+it falsify internal timers in order to fool a timing test and provide transparency. 
+However, the correct manipulation of timing cannot be guaranteed in all the circumstances. 
+As a result, nEther can detect the existence of Ether, based on a contradiction 
+raised by clock cycle manipulation where the analyzer returns an adjusted cycle 
+difference to hide its presence.
 
-The CPUID instruction returns processor identification and feature information depending on the content of general registers EAX and ECX. These could be exploited by anlyzer detectors as various modifications of the system can be retrieved. In case of Ether, it does alter a few bits of information that could be returned by the correct configuration of CPUID. Therefore, nEther can detect Ether by checking a few bits returned by a CPUID that are specific to Ether.
+The CPUID instruction returns processor identification and feature information 
+depending on the content of general registers EAX and ECX. These could be exploited 
+by anlyzer detectors as various modifications of the system can be retrieved. 
+In case of Ether, it does alter a few bits of information that could be returned 
+by the correct configuration of CPUID. Therefore, nEther can detect Ether 
+by checking a few bits returned by a CPUID that are specific to Ether.
 
-CPU Errata refer to the collection of design defects or errors and it strongly depends on CPU models. nEther exploits bugs in the Core 2 Duo family, called AH4 Erratum which unintendedly updates the Last Exception Recored(LER) MSR. This errata is not implemented in hardware-assisted-virtualization solutions, such as Xen. In other words, this bug will not happen in the hardware-assisted-virtualized runtime environment, and as a result, nEther can distinguish virtualized environment from native by executing CPU errata and checking whether LER MSR is unexpectedly updated or not. These type of feature tests could not reveal the presence of Ether, but could reveal the hardware-assisted-virtualized runtime environment. 
+CPU Errata refer to the collection of design defects or errors and 
+it strongly depends on CPU models. nEther exploits bugs in the Core 2 Duo family, 
+called AH4 Erratum which unintendedly updates the Last Exception Recored(LER) MSR. 
+This errata is not implemented in hardware-assisted-virtualization solutions, such as Xen. 
+In other words, this bug will not happen in the hardware-assisted-virtualized runtime environment, 
+and as a result, nEther can distinguish virtualized environment from native 
+by executing CPU errata and checking whether LER MSR is unexpectedly updated or not. 
+These type of feature tests could not reveal the presence of Ether, 
+but could reveal the hardware-assisted-virtualized runtime environment. 
 
 \begin{figure}[!h]
 	\centering
@@ -36,6 +65,7 @@ CPU Errata refer to the collection of design defects or errors and it strongly d
 \end{figure}
 
 \subsection{Detecting Virtualized Environment}
+
 
 \mvf{TODO: CPU Errata~\cite{thompson}}
 
