@@ -1,13 +1,7 @@
 Garfinkel {\em et al.}~\cite{garfinkel2007} believe that complete
 transparency of VMM is infeasible and is contrary to the fundamental limitations
 of virtualization technology.
-
-Anomalies will always exist blah
-
-Virtual Machine Based Root-kits (VMBR) make AV software have to detect
-virtualization as well~\cite{thompson, ferrie2007}. Examples are
-BluePill~\cite{bluepill} and Vitriol~\cite{vitriol}, both using virtualization
-extensions (both Intel and AMD).
+Regardless of the detection type, making the software based virtualization transparent is infeasible due to countless bugs. On the hardware based type however, anomaly based methods are small enough to play the cat and mouse game where malware authors find vulnerabilities and security professionals patch the vulnerable instructions. For the timing based attacks, it is very difficult to prevent relative comparison attacks and cache based attacks.
 
 %%% Local Variables:
 %%% mode: latex
