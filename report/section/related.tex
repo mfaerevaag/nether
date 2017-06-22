@@ -65,9 +65,7 @@ but could reveal the hardware-assisted-virtualized runtime environment.
 \end{figure}
 
 \subsection{Detecting Virtualized Environment}
-
-
-\mvf{TODO: CPU Errata~\cite{thompson}}
+Raffetseder \textit{et al.} proposed approaches to identify a processor using CPU errata~\cite{raffetseder2007} and it is also valid for detecting system monitors. They exploits \textit{Errata N 5} and \textit{Errata N 86} of Intel Pentium 4 processor, that result in a segment fault or an incorrect debug exception respectively. In QEMU, However, both of errata do not happen or happen differently from native environment. As a result, they can detect system monitors, but this is only valid for QEMU hardware emulator.
 
 Several efforts has been made on how relative difference in execution time of
 two instructions could be used to detect a virtualized
@@ -85,7 +83,9 @@ instruction that is still trapped by the VMM, i.e. {\tt CPUID}, will cause a
 flush of the TLB. This could be detected through timing the instruction before
 and after anticipated flush. This method has later been documented by other
 authors~\cite{thompson}.
-\mvf{Maybe not relevant with use of ASID? (doesn't flush TLB)}
+
+
+
 
 Using dynamic analysis to disable detection routines~\cite{kang2009}.
 
