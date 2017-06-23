@@ -1,16 +1,20 @@
+\mvf{maybe a sentence or two, explaining how our paper is closely related to
+  ether and nether, and the structure of this section}
+
 \subsection{Ether}
-Ether~\cite{ether} is a malware analysis platform that utilizes 
-Intel VT's hardware virtualization extensions, and theoretically it has no presence 
-in the guest operating system. It uses native CPU instructions, thus does not suffer from 
-incomplete or inaccurate system emulation such as hardware emulators do. 
-Ether also comes with a rich feature set, thus it can monitor 
-all the memory write attempts of the guest, trace the instructions and 
-system calls of in-guest processes, and unpack a wide range of protected binaries. 
-As a result, malware cannot detect the presence of Ether. In that paper, 
-they evaluated Ether and several other state-of-the-art analyzers on the obfuscation techniques 
-used to obfuscate 25,000 recent malware samples. The results show that Ether remains transparent 
-and defeats the obfuscation tools that evade the existing approaches. 
-Ether's system architecture is represented in Figure~\ref{fig:ether} below.
+Ether~\cite{ether} is a malware analysis platform that utilizes the Intel VT-x
+hardware virtualization extensions, and theoretically has no presence in the
+guest operating system. It uses native CPU instructions, thus does not suffer
+from incomplete or inaccurate system emulation such as hardware emulators do.
+Ether also comes with a rich feature set, thus it can monitor all the memory
+write attempts of the guest, trace the instructions and system calls of in-guest
+processes, and unpack a wide range of protected binaries. As a result, malware
+cannot detect the presence of Ether. In that paper, they evaluated Ether and
+several other state-of-the-art analyzers on the obfuscation techniques used to
+obfuscate 25,000 recent malware samples. The results show that Ether remains
+transparent and defeats the obfuscation tools that evade the existing
+approaches. Ether's system architecture is represented in Figure~\ref{fig:ether}
+below.
 
 \begin{figure}[!h]
 	\centering
@@ -20,25 +24,26 @@ Ether's system architecture is represented in Figure~\ref{fig:ether} below.
 \end{figure}
 
 \subsection{nEther}
-P{\'e}k \textit{et al.} introduced novel approaches that make the detection of 
-hardware assisted virtualization platforms and out-of-the-guest 
-malware analysis frameworks possible~\cite{nether}. In order to demonstrate their concepts, 
-they implemented a scalable and flexible application framework over Window XP 
-called \textit{nEther} which can practically disclose the presence of both 
-\textit{Ether}~\cite{ether}, and Intel VT by executing multiple feature tests. 
-The system overview of nEther is depicted in Figure~\ref{fig:nether} and 
-their proposed feature tests consist of three parts as follows: 1) timing information, 
-2) CPUID information, and 3) CPU Errata. 
+P{\'e}k \textit{et al.} introduced novel approaches that make the detection of
+hardware assisted virtualization platforms and out-of-the-guest malware analysis
+frameworks possible~\cite{nether}. In order to demonstrate their concepts, they
+implemented a scalable and flexible application framework over Window XP called
+\textit{nEther} which can practically disclose the presence of both
+\textit{Ether}~\cite{ether}, and Intel VT-x by executing multiple feature tests.
+The system overview of nEther is depicted in Figure~\ref{fig:nether} and their
+proposed feature tests consist of three parts as follows: 1) timing information,
+2) CPUID information, and 3) CPU Errata.
 
-The use of timing information is a well-known techinique to detect the presence 
-of traditional debuggers. The simplest way to get timing information is 
-the use of internal timers and periodic interrupt sources such as the Time-Stamp Counter(TSC), 
-Periodic Interrupt Timper (PIT), and so on. In case of out-of-the-guest malware analyser, 
-it falsify internal timers in order to fool a timing test and provide transparency. 
-However, the correct manipulation of timing cannot be guaranteed in all the circumstances. 
-As a result, nEther can detect the existence of Ether, based on a contradiction 
-raised by clock cycle manipulation where the analyzer returns an adjusted cycle 
-difference to hide its presence.
+The use of timing information is a well-known techinique to detect the presence
+of traditional debuggers. The simplest way to get timing information is the use
+of internal timers and periodic interrupt sources such as the Time-Stamp
+Counter(TSC), Periodic Interrupt Timer (PIT), and so on. In case of
+out-of-the-guest malware analyzer, it falsify internal timers in order to fool a
+timing test and provide transparency. However, the correct manipulation of
+timings cannot be guaranteed in all circumstances. As a result, nEther can
+detect the existence of Ether, based on a contradiction raised by clock cycle
+manipulation where the analyzer returns an adjusted cycle difference to hide its
+presence.
 
 The CPUID instruction returns processor identification and feature information 
 depending on the content of general registers EAX and ECX. These could be exploited 
@@ -47,15 +52,16 @@ In case of Ether, it does alter a few bits of information that could be returned
 by the correct configuration of CPUID. Therefore, nEther can detect Ether 
 by checking a few bits returned by a CPUID that are specific to Ether.
 
-CPU Errata refer to the collection of design defects or errors and 
-it strongly depends on CPU models. nEther exploits bugs in the Core 2 Duo family, 
-called AH4 Erratum which unintendedly updates the Last Exception Recored(LER) MSR. 
-This errata is not implemented in hardware-assisted-virtualization solutions, such as Xen. 
-In other words, this bug will not happen in the hardware-assisted-virtualized runtime environment, 
-and as a result, nEther can distinguish virtualized environment from native 
-by executing CPU errata and checking whether LER MSR is unexpectedly updated or not. 
-These type of feature tests could not reveal the presence of Ether, 
-but could reveal the hardware-assisted-virtualized runtime environment. 
+CPU Errata refer to the collection of design defects or errors in specific model
+or family. nEther exploits bugs in the Core 2 Duo family, called the AH4 Erratum
+which unintendedly updates the Last Exception Record (LER) MSR. This errata is
+not implemented in hardware-assisted virtualization solutions, such as Xen. In
+other words, this bug will not happen in the hardware-assisted virtualized
+runtime environment, and as a result, nEther can distinguish virtualized
+environment from native by executing CPU errata and checking whether LER MSR is
+unexpectedly updated or not. These type of feature tests could not reveal the
+presence of Ether, but could reveal the hardware-assisted virtualized runtime
+environment, such as Xen.
 
 \begin{figure}[!h]
 	\centering
@@ -64,41 +70,46 @@ but could reveal the hardware-assisted-virtualized runtime environment.
 	\label{fig:nether}
 \end{figure}
 
-\subsection{Detecting Virtualized Environment}
-Raffetseder \textit{et al.} proposed approaches to identify a processor 
-using CPU errata~\cite{raffetseder2007} and it is also valid for detecting system monitors. 
-They exploits \textit{Errata N 5} and \textit{Errata N 86} of Intel Pentium 4 processor, 
-that result in a segment fault or an incorrect debug exception respectively. 
-In QEMU, However, both of errata do not happen or happen differently from native environment. 
-As a result, they can detect system monitors, but this is only valid for QEMU hardware emulator.
+\subsection{Detecting Virtualized Environments}
+Raffetseder \textit{et al.} proposed approaches to identify a processor using
+CPU errata~\cite{raffetseder2007} and it is also valid for detecting system
+monitors. They exploit \textit{Errata N 5} and \textit{Errata N 86} of the Intel
+Pentium 4 processor, that result in a segment fault or an incorrect debug
+exception respectively. In QEMU, however, both errata does either not occur or
+the effects are different from native environment. As a result, they can detect
+system monitors, but this is only valid for the QEMU hardware emulator.
 
 Several efforts has been made on how relative difference in execution time of
 two instructions could be used to detect a virtualized
-environment~\cite{raffetseder2007, thompson}. Using absolute time differences is
-not feasible, as architectures are complex and different, but the relative
-difference is more predictable. Comparing one instruction that is known not to
-be trapped by the VMM and one that is, for instance {\tt NOP} and {\tt CPUID}
-the authors showed that different VMMs showed significantly different ratios
-compared to bare metal.
+environments~\cite{raffetseder2007, thompson}. Using absolute time differences
+is not feasible, as architectures are so are complex and different that absolute
+timings are not practical. Relative differences, on the other hand, is more
+predictable. Comparing one instruction that is known not to be trapped by the
+VMM and one that is, for instance {\tt NOP} and {\tt CPUID}, the authors showed
+that different VMMs showed significantly different ratios compared to bare
+metal.
 
-Ferrie \textit{et al.} showed in 2007 how~\cite{ferrie2007} context switches between an
-VMM and guest could be used to detect hypervisors based on Intel VT-x though the
-flushing of the Translation Lookaside Buffer (TLB). Using a non-privileged
-instruction that is still trapped by the VMM, i.e. {\tt CPUID}, will cause a
-flush of the TLB. This could be detected through timing the instruction before
-and after anticipated flush. This method has later been documented by other
-authors~\cite{thompson}.
+Ferrie \textit{et al.}~\cite{ferrie2007} showed in 2007 how context switches
+between a VMM and guest could be used to detect hypervisors based on Intel VT-x
+through the flushing of the Translation Lookaside Buffer (TLB). Using a
+non-privileged instruction that is still trapped by the VMM, i.e. {\tt CPUID},
+will cause a flush of the TLB. This could be detected through timing the
+instruction before and after anticipated flush. This method has later been
+documented by other authors~\cite{thompson}.
 
-Franklin \textit{et al.} proposed an approach to detect VMM by exploiting the timing dependency exception property of a virtual machine monitor~\cite{franklin2008}. Thier approach can detect several different VMMs across the Internet, including VMware and the Xen VMM on a machine with hardware assistance for virtualization.
+Franklin \textit{et al.} proposed an approach to detect VMM by exploiting the
+timing dependency exception property of a virtual machine
+monitor~\cite{franklin2008}. Their approach can detect several popular VMMs,
+including VMware and Xen.
 
-There are several attempts to defeat detection of virtualized environment. 
-Kang \textit{et al.} proposed an approach to dynamically modify the execution of 
-a whole-system emulator in order to fool a malware and frustrate anti-emulation techniques 
-of malware~\cite{kang2009}. Their approach uses a scalable trace matching algorithm to locate 
-the point where emulated execution diverges, and then compares the states of the reference system 
-and the emulator to create a dynamic state modification that repairs the difference. 
-
-
+There are several attempts to defeat detection of virtualized environments. Kang
+\textit{et al.} proposed an approach to dynamically modify the execution of a
+whole-system emulator in order to fool a malware and thwart anti-virtualization
+techniques using in malware~\cite{kang2009}. Their approach uses a scalable
+trace matching algorithm to locate the point where the emulated execution
+diverges. From this point, the states of the reference system and the emulator
+are compared to create a dynamic state modification that can repair the
+difference.
 
 %%% Local Variables:
 %%% mode: latex
