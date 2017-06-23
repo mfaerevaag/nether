@@ -2,11 +2,16 @@ Garfinkel {\em et al.}~\cite{garfinkel2007} believe that complete transparency
 of VMM is infeasible and is contrary to the fundamental limitations of
 virtualization technology. Regardless of the detection type, making the software
 based virtualization transparent is infeasible due to countless bugs. On the
-hardware-based type however, anomaly \mvf{change use of the word ``anomaly''}
-based methods are small enough to play the cat and mouse game where malware
+hardware-based type however, CPUID and CPU errata based methods are small enough to play the cat and mouse game where malware
 authors find vulnerabilities and security professionals patch the vulnerable
 instructions. For the timing based attacks, it is very difficult to prevent
 relative comparison attacks and cache based attacks.
+Detecting virtualization can also have benign use. Virtual Machine
+Based Root-kits (VMBR) make AV software have to detect virtualization as
+well~\cite{thompson, ferrie2007}. Examples are BluePill~\cite{bluepill} and
+Vitriol~\cite{vitriol}, both using virtualization extensions (both Intel and
+AMD). Therefore, the research community should be aware of the fact that
+completly transparent VMs is a double-edged sword.m
 
 %%% Local Variables:
 %%% mode: latex

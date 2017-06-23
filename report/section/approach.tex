@@ -174,20 +174,15 @@ Relative Performance = \frac{T_{privileged}}{T_{unprivileged}}
 \end{equation*}
 
 Real processors have to perform different tasks than emulated processors when
-handling privileged instructions. Thus, it causes different relative performance
+handling privileged instructions. Thus, it causes difference in relative performance
 results. Raffetseder {\em et al.}~\cite{raffetseder2007} have conducted an
-experiment to prove this concept. A kernel module reads from a control register
-(CR0~\footnote{contains various control flags} or CR3~\footnote{When virtual
-  addressing is enabled, CR3 register helps on virtual address to physical
-  address translation}), then writes it back to where it came
-from.~\mvf{unclear, please elaborate} Raffetseder {\em et al.} used the
+experiment to prove this concept.  Raffetseder {\em et al.} used the
 processor's Time Stamp Counter (TSC) to measure the time elapsed to execute an
 instruction, as shown in Figure~\ref{fig:comparison_of_instructions}. Real
 hardware showed poor relative performance when accessing {\tt CR0}, but greater
 performance when accessing {\tt CR3}. Although Raffetseder {\em et al.} did not
-explicitly explain why the results, the experiments showed differences in terms
-of 10 to 100 times between emulated and real environments \mvf{incoherent
-  sentence}. Thus, the difference is large enough to detect virtual
+explicitly explain why the results differed in terms
+of 10 to 100 times between emulated and real environments. The difference is large enough to detect virtual
 environments.
 
 \subsubsection{Mitigation of Comparison of Instructions}

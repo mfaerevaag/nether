@@ -1,18 +1,10 @@
 In this paper, we have explored the virtualization detection methods mentioned
 in nEther~\cite{nether} and its countermeasures. Software-based virtualization
 are infeasible to be transparent due to their countless bugs. However, we have
-proposed techniques for defending anomaly based \mvf{dont used the word
-  ``anomaly''} techniques, such as CPU errata. Although a thorough investigation
+proposed techniques against CPUID and CPU errata based attacks. Although a thorough investigation
 into evaluating the effectiveness of the proposed techniques was not conducted,
-we believe that anomaly based detection \mvf{dont used the word ``anomaly''}
-schemes are feasible to be patched. Detecting virtualization can also have
-benign use \mvf{remove or mention in a discussion section}. Virtual Machine
-Based Root-kits (VMBR) make AV software have to detect virtualization as
-well~\cite{thompson, ferrie2007}. Examples are BluePill~\cite{bluepill} and
-Vitriol~\cite{vitriol}, both using virtualization extensions (both Intel and
-AMD). Therefore, the research community should be aware of the fact that
-completly transparent VMs is a double-edged sword.~\mvf{this need to be
-  discusses before being included in the conclusion!}.
+we believe that CPUID and CPU errata based detection schemes are feasible to be patched.
+
 
 %%% Local Variables:
 %%% mode: latex
