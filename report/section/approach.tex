@@ -115,11 +115,32 @@ Raffetseder\textquotesingle s~\cite{raffetseder2007} experiments on comparison o
 \subsubsection{Cached Instructions}
 Caching lets the system hold on to recently executed functions in case they are needed again in near future. As a result, executing cached functions will consume less CPU cycles compared to the first time as shown on Figure~\ref{fig:cache_realhw} left. However, caching can be turned off on machines running on bare metal by making the processor enter the no-fill cache mode and flushing out all existing caches by using the WBINVD instruction. As a result, latter executions consume as much CPU cycles as the first run as shown on Figure~\ref{fig:cache_realhw} right.
 However, it was shown that disabling caching is not properly supported on Qemu and VMware. Raffetseder{\em et al.}~\cite{raffetseder2007} has executed six independent test runs where each test run consists of five calls to one function. Both the Qemu (Figure~\ref{fig:cache_qemu}) and VMware (Figure~\ref{fig:cache_vmware}) had significant CPU cycle reduction after the first execution regardless of the caching preference.
-Therefore, malware authors can take advantage of the fact the caching canno reallyt be turned off on virtual environments. If a malware obtain measurements similar to Figure~\ref{fig:cache_qemu} or Figure~\ref{fig:cache_vmware}, it should consider itself being in a sandbox and hide its malicious executions.
-The malware authors can also take advantage of TLB flush to detect sandboxes. As mentioned in \ref{sssec:mitigation_relative}, software based solutions are very buggy and fundamentally limited to provide good virtualization, thus it is easy for malwares to detect them. For sandboxes running on top ofhardware assisted virtualization can trigger TLB flush to emulated caching being disabled. When a context switch is made from the guest to the hypervisor, the TLB is flushed to change the guest \textquotesingle s context to hypervisor \textquotesingle s context. Since TLB flush can be triggered by using non-privileged instructions \footnote{trapped down to the hypervisor and also available in the guest}, the time taken by an instruction can be calculated by running something like shown in figure~\ref{fig:cache_mitigation}. Upon calling non-privileged instructions that should cause TLB flushed multiple times, the time taken will decrease if TLB has not been flushed. However, the TLB has been flushed, then the time will increase. 
+Therefore, malware authors can take advantage of the fact the caching cannot really be disabled on virtual environments. If a malware obtain measurements similar to Figure~\ref{fig:cache_qemu} or Figure~\ref{fig:cache_vmware}, it should consider itself being in a sandbox and hide its malicious executions.
+The malware authors can also take advantage of TLB flush to detect sandboxes. As mentioned in \ref{sssec:mitigation_relative}, software based solutions are buggy and fundamentally limited to provide good virtualization, thus it is easy for malwares to detect them. Malware anayizers running on top of hardware assisted virtualization can trigger TLB flush to emulated caching being disabled. When a context switch is made from the guest to the hypervisor, the TLB is flushed to change the guest \textquotesingle s context to hypervisor \textquotesingle s context. Since TLB flush can be triggered by using non-privileged instructions \footnote{trapped down to the hypervisor and also available in the guest}, the time taken by an instruction can be calculated by running something like shown in figure~\ref{fig:cache_mitigation}. Upon calling non-privileged instructions that should cause TLB flushed multiple times, the time taken will decrease if TLB has not been flushed. However, the TLB has been flushed, then the time will increase.
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/realhw.jpg}
+	\caption{Real hardware Cache On (left), Cache Off (right)}
+	\label{fig:cache_realhw}
+\end{figure*}
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/qemu.jpg}
+	\caption{Qemu On (left), Cache Off (right)}
+	\label{fig:cache_qemu}
+\end{figure*}
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figure/vmware.jpg}
+	\caption{VMware Cache On (left), Cache Off (right)}
+	\label{fig:cache_vmware}
+\end{figure*}
 
 \subsubsection{Mitigation of Cached Instructions}
-Controling low level CPU caching is very difficult due to 8 way set associative architecture. Thus, even just trying to fill up cache is not a easy job. There is no good solution known to prevent caching based VM detection in the resarch community. Theoratically, Address Space Identifier  (ASID) can control prevent flushing. However, it is also difficult to use it effectively on low level cache. 
+Controlling low level CPU caching is very difficult due to 8-way set associative architecture. Thus, even just attempting to fill up cache is not a easy job. There is no good solution known to prevent caching based VM detection in the resarch community. Theoratically, Address Space Identifier (ASID) can control prevent flushing. However, it is also difficult to use it effectively on low level cache. 
 
 \begin{figure}[h]
 \begin{lstc}
@@ -143,27 +164,6 @@ cmp $before $after
 \caption{\label{fig:cache_mitigation} Assembly code to measure the instruction meantime}
 \end{figure}
 
-
-\begin{figure*}[!t]
-	\centering
-	\includegraphics[width=\textwidth]{figure/realhw.jpg}
-	\caption{Real hardware Cache On (left), Cache Off (right)}
-	\label{fig:cache_realhw}
-\end{figure*}
-
-\begin{figure*}[!t]
-	\centering
-	\includegraphics[width=\textwidth]{figure/qemu.jpg}
-	\caption{Qemu On (left), Cache Off (right)}
-	\label{fig:cache_qemu}
-\end{figure*}
-
-\begin{figure*}[!t]
-	\centering
-	\includegraphics[width=\textwidth]{figure/vmware.jpg}
-	\caption{VMware Cache On (left), Cache Off (right)}
-	\label{fig:cache_vmware}
-\end{figure*}
 
 %%% Local Variables:
 %%% mode: latex
