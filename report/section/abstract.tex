@@ -1,6 +1,15 @@
-\textbf{
-nEther\cite{nether} has broken the transparent malware analysis virtual machine (VM) environment called Ether\cite{ether} by taking advantage of CPUID field, CPU errata, and timing based detection. Even though there has been a lot of efforts on keeping the VM transparent, the malware authors are winning the fight because detecting VM is easier than preventing detection. In this paper, we study significant VM detection techniques and suggest defense techniques against them.
-}
+{\bf Ether~\cite{ether} showed how virtualization extensions, such as Intel
+  VT-x, could be utilized to do transparent malware analysis, using an
+  out-of-guest analyzer, achieving both fine-grained and course-grained
+  analysis. Later, nEther~\cite{nether} broke the transparency of this
+  environment by exploiting involuntary side effects to certain instruction, by
+  looking for false negative bugs caused by CPU errata, and lastly, certain
+  differences in timing. Even though there has been significant efforts in
+  keeping virtualized environments transparent, the malware authors are winning
+  the fight because detection is arguably easier than prevention, due to the
+  fundamental approach of virtualization and emulation of hardware. In this
+  paper, we study significant detection techniques and suggest new methods of
+  defense against certain attacks. }
 
 %%% Local Variables:
 %%% mode: latex
