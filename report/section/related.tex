@@ -81,7 +81,7 @@ be trapped by the VMM and one that is, for instance {\tt NOP} and {\tt CPUID}
 the authors showed that different VMMs showed significantly different ratios
 compared to bare metal.
 
-Ferrie {et al.} showed in 2007 how~\cite{ferrie2007} context switches between an
+Ferrie \textit{et al.} showed in 2007 how~\cite{ferrie2007} context switches between an
 VMM and guest could be used to detect hypervisors based on Intel VT-x though the
 flushing of the Translation Lookaside Buffer (TLB). Using a non-privileged
 instruction that is still trapped by the VMM, i.e. {\tt CPUID}, will cause a
@@ -89,14 +89,16 @@ flush of the TLB. This could be detected through timing the instruction before
 and after anticipated flush. This method has later been documented by other
 authors~\cite{thompson}.
 
+Franklin \textit{et al.} proposed an approach to detect VMM by exploiting the timing dependency exception property of a virtual machine monitor~\cite{franklin2008}. Thier approach can detect several different VMMs across the Internet, including VMware and the Xen VMM on a machine with hardware assistance for virtualization.
+
 There are several attempts to defeat detection of virtualized environment. 
 Kang \textit{et al.} proposed an approach to dynamically modify the execution of 
 a whole-system emulator in order to fool a malware and frustrate anti-emulation techniques 
 of malware~\cite{kang2009}. Their approach uses a scalable trace matching algorithm to locate 
-the point where emulated execution diverges, and then compares the states of the reference system
- and the emulator to create a dynamic state modification that repairs the difference. 
+the point where emulated execution diverges, and then compares the states of the reference system 
+and the emulator to create a dynamic state modification that repairs the difference. 
 
-Using remote detector machine~\cite{franklin2008}.
+
 
 %%% Local Variables:
 %%% mode: latex
